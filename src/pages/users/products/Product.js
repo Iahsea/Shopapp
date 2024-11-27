@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Product.scss";
 import ReactPaginate from "react-paginate";
+import { getProducts } from "../../../services/apiService";
 
 const Product = (props) => {
-  const { listProducts, pageCount, imageBaseUrl } = props;
+  const LIMIT_PRODUCTS = 6;
+
+  // Giả sử có một danh sách sản phẩm (sử dụng useState và useEffect)
+  const [listProducts, setListProducts] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productId, setProductId] = useState("");
+  const imageBaseUrl = "http://localhost:8088/api/v1/products/images/";
 
   const handlePageClick = (event) => {
-    props.fetchListProduct(+event.selected);
-    props.setCurrentPage(+event.selected + 1);
+    dirFetchListProduct(+event.selected);
+    setCurrentPage(+event.selected + 1);
     console.log(`User requested page number ${event.selected + 1}`);
+  };
+
+  useEffect(() => {
+    dirFetchListProduct(0);
+  }, []);
+
+  const dirFetchListProduct = async (page) => {
+    let data = await getProducts(page, LIMIT_PRODUCTS);
+    setListProducts(data.products);
+    setPageCount(data.totalPages);
   };
 
   return (
@@ -59,7 +77,7 @@ const Product = (props) => {
           containerClassName="pagination"
           activeClassName="active"
           renderOnZeroPageCount={null}
-          forcePage={props.currentPage - 1}
+          forcePage={currentPage - 1}
         />
       </div>
     </>

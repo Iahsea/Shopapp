@@ -9,7 +9,10 @@
   background-position: center; /* Canh giữa ảnh */
   background-repeat: no-repeat; /* Không lặp lại ảnh */
   position: relative;
-  margin-bottom: 100px;
+  max-width: 1200px;
+  margin: 20px auto 60px;
+  padding: 0 15px;
+  border-radius: 10px;
 
   h1 {
     font-size: 36px;

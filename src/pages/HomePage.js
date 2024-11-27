@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./HomePage.scss";
 import Banner from "../components/Banner/Banner";
-import Product from "./users/products/Product";
 import { getProducts } from "../services/apiService";
+import HotProduct from "./users/products/HotProduct";
 
 const HomePage = () => {
-  const LIMIT_PRODUCT = 6;
+  const LIMIT_PRODUCT = 100;
 
   // Giả sử có một danh sách sản phẩm (sử dụng useState và useEffect)
   const [listProducts, setListProducts] = useState([]);
@@ -37,7 +37,7 @@ const HomePage = () => {
   };
   return (
     <div className="homepage-container">
-      {/* Main content */}
+      <h2 className="welcome">Welcome to IAHSEA SHOP</h2>
       <main>
         {/* Banner section */}
         <section className="banner">
@@ -47,15 +47,14 @@ const HomePage = () => {
         {/* Product section */}
 
         <section className="product-section">
-          <h2 className="section-title">Sản phẩm nổi bật</h2>
+          <h2 className="section-title">SẢN PHẦM NỔI BẬT</h2>
           <div className="product-grid">
-            <Product
+            <HotProduct
               listProducts={listProducts}
-              fetchListProduct={fetchListProduct}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
               pageCount={pageCount}
+              currentPage={currentPage}
               imageBaseUrl={imageBaseUrl}
+              fetchListProduct={fetchListProduct}
             />
           </div>
         </section>

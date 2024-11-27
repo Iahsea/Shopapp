@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Category from "./pages/users/categories/Category";
+import Product from "./pages/users/products/Product";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,6 +19,7 @@ root.render(
         <Route index element={<HomePage />} />
         <Route path="/users" element={<User />} />
         <Route path="/admins" element={<Admin />} />
+        <Route path="/products" element={<Product />} />
       </Route>
 
       <Route path="/login" element={<Login />} />

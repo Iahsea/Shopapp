@@ -19,6 +19,7 @@
     "react-scripts": "5.0.1",
     "react-toastify": "9.0.7",
     "sass": "^1.81.0",
+    "swiper": "11.1.15",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

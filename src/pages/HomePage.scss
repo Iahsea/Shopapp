@@ -1,76 +1,67 @@
 .homepage-container {
+  .welcome {
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    margin-top: 50px;
+    letter-spacing: 3px;
+    background: linear-gradient(45deg, #007bff, #ff5722);
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: fadeIn 3s ease-in-out; /* Áp dụng hiệu ứng fade-in */
+
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+    /* Animation fade-in */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
+
+  .section-title {
+    font-size: 2.5rem; /* Kích thước chữ lớn hơn */
+    font-weight: bold; /* Chữ in đậm */
+    text-align: center; /* Căn giữa */
+    margin: 40px 0; /* Khoảng cách trên và dưới */
+    position: relative; /* Để sử dụng hiệu ứng trước và sau */
+    background: linear-gradient(90deg, #007bff, #ff5722); /* Gradient */
+    -webkit-background-clip: text; /* Áp dụng gradient cho chữ */
+    color: transparent; /* Chữ trong suốt để hiện gradient */
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100px; /* Độ dài đường gạch */
+      height: 4px; /* Độ dày đường gạch */
+      background: linear-gradient(90deg, #007bff, #ff5722); /* Gradient */
+      top: 50%; /* Canh giữa theo trục dọc */
+      transform: translateY(-50%);
+      border-radius: 2px; /* Bo góc đường gạch */
+    }
+
+    &::before {
+      left: calc(50% - 500px); /* Căn chỉnh đường bên trái */
+    }
+
+    &::after {
+      right: calc(50% - 500px); /* Căn chỉnh đường bên phải */
+    }
+  }
+
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
   color: #333;
-  // Giới hạn chiều rộng và căn giữa
-  max-width: 1200px; // hoặc giá trị khác phù hợp, ví dụ: 960px, 1024px
-  margin: 0 auto;
-  padding: 0 15px; // thêm khoảng cách bên trong để nội dung không sát mép
 
   .nav-link {
     &.active {
       color: #00bfff;
-    }
-  }
-
-  .product-list {
-    padding: 20px;
-
-    h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .products {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-
-      .product-card {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        width: 200px;
-        text-align: center;
-        padding: 10px;
-
-        img {
-          width: 100%;
-          height: auto;
-          border-radius: 5px;
-        }
-
-        .product-info {
-          margin-top: 10px;
-
-          h3 {
-            font-size: 18px;
-            margin: 5px 0;
-          }
-
-          p {
-            font-size: 16px;
-            color: #333;
-            margin: 5px 0;
-          }
-
-          .add-to-cart {
-            background-color: #ff5722;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-
-            &:hover {
-              background-color: #e64a19;
-            }
-          }
-        }
-      }
     }
   }
 
