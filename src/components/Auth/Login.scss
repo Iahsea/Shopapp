@@ -1,0 +1,84 @@
+.login-container {
+  height: 100vh;
+  background: url("../../assets/images/background.jpg") no-repeat;
+  background-size: cover;
+  background-position: center;
+  color: aliceblue;
+
+  .wrapper-container {
+    background-color: aqua;
+    background: transparent;
+    border: 2px solid white;
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 10px rgb(151, 144, 144);
+    border-radius: 10px;
+    width: 40%;
+    margin: 0 auto; /* Đưa container ra giữa màn hình theo chiều ngang */
+    padding: 20px; /* Thêm khoảng cách bên trong container (nếu cần) */
+  }
+
+  .header {
+    height: 45px;
+    text-align: right;
+    padding: 5px 100px 0 100px;
+    margin-bottom: 80px;
+
+    button {
+      padding: 3px 15px;
+      margin-left: 15px;
+      border-radius: 5px;
+      background: #f9f9f9;
+      border: 1px solid;
+
+      &:hover {
+        background-color: white;
+      }
+    }
+  }
+
+  .form-group {
+    margin-bottom: 50px; /* Tạo khoảng cách giữa các nhóm */
+  }
+
+  .title {
+    // border: 2px solid white;
+    border-radius: 10px;
+    font-size: 25px;
+    padding: 20px 0;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .content-form {
+    input {
+      margin-bottom: 15px;
+      margin-top: 3px;
+      background: transparent;
+      color: white;
+    }
+
+    .form-control::placeholder {
+      color: white; /* Đổi màu chữ gợi ý placeholder */
+    }
+
+    button {
+      width: 100%;
+      height: 40px;
+      border: none;
+      border-radius: 5px;
+      margin: 20px 0;
+      color: rgb(14, 13, 13);
+      background: rgb(255, 255, 255);
+
+      &:disabled {
+        background: #dddddd;
+        color: #afafaf;
+        cursor: no-drop;
+      }
+    }
+
+    .back {
+      cursor: pointer;
+    }
+  }
+}

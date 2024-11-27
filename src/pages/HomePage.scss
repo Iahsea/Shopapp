@@ -1,0 +1,89 @@
+.homepage-container {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  // Giới hạn chiều rộng và căn giữa
+  max-width: 1200px; // hoặc giá trị khác phù hợp, ví dụ: 960px, 1024px
+  margin: 0 auto;
+  padding: 0 15px; // thêm khoảng cách bên trong để nội dung không sát mép
+
+  .nav-link {
+    &.active {
+      color: #00bfff;
+    }
+  }
+
+  .product-list {
+    padding: 20px;
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .products {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+
+      .product-card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: 200px;
+        text-align: center;
+        padding: 10px;
+
+        img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+        }
+
+        .product-info {
+          margin-top: 10px;
+
+          h3 {
+            font-size: 18px;
+            margin: 5px 0;
+          }
+
+          p {
+            font-size: 16px;
+            color: #333;
+            margin: 5px 0;
+          }
+
+          .add-to-cart {
+            background-color: #ff5722;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+              background-color: #e64a19;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+
+    p {
+      font-size: 14px;
+      color: #999;
+    }
+  }
+}

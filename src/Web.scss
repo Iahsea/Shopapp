@@ -1,0 +1,73 @@
+body {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-width: 1350px) {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    max-width: 1300px !important;
+  }
+}
+
+.web-container {
+  .header-container {
+    padding: 11px;
+    background-color: #fbfbfb;
+    .btn-login {
+      border-radius: 15px;
+      margin-right: 20px;
+      padding: 8px 15px;
+      border: 1px solid #535353;
+    }
+
+    .btn-signup {
+      border-radius: 20px;
+      padding: 0 15px;
+      background: #303030;
+      color: white;
+
+      &:hover {
+        background: black;
+      }
+    }
+
+    .nav-link {
+      &.active {
+        color: #00bfff;
+      }
+    }
+  }
+
+  .sub-header-container {
+    background-color: #e9e9e9;
+
+    .search_item {
+      .search_icon {
+        font-size: 30px;
+        margin-right: 10px;
+        color: rgb(35, 177, 35);
+      }
+
+      .search-bar {
+        border-radius: 10px;
+        margin-right: 300px;
+      }
+    }
+    .nav-link {
+      &.active {
+        color: #00bfff;
+      }
+    }
+  }
+}

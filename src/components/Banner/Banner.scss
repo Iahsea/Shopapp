@@ -1,0 +1,23 @@
+.banner {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #eef2f5;
+  background-image: url("../../assets/images/banner.jpg");
+  height: 100vh; /* Chiều cao vừa khung màn hình */
+  width: 100%; /* Chiều rộng vừa khung cha */
+  background-size: cover; /* Đảm bảo ảnh phủ kín khung */
+  background-position: center; /* Canh giữa ảnh */
+  background-repeat: no-repeat; /* Không lặp lại ảnh */
+  position: relative;
+  margin-bottom: 100px;
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 18px;
+    color: #666;
+  }
+}
