@@ -3,6 +3,7 @@ import "./HomePage.scss";
 import Banner from "../components/Banner/Banner";
 import { getProducts } from "../services/apiService";
 import HotProduct from "./users/products/HotProduct";
+import Footer from "../components/Footer/Footer";
 
 const HomePage = () => {
   const LIMIT_PRODUCT = 100;
@@ -62,7 +63,7 @@ const HomePage = () => {
 
       {/* Footer */}
       <footer className="footer">
-        <p>© 2024 Shop Online. All rights reserved.</p>
+        <Footer />
       </footer>
     </div>
   );

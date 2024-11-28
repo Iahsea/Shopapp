@@ -4,7 +4,7 @@ import ReactPaginate from "react-paginate";
 import { getProducts } from "../../../services/apiService";
 
 const Product = (props) => {
-  const LIMIT_PRODUCTS = 6;
+  const LIMIT_PRODUCTS = 12;
 
   // Giả sử có một danh sách sản phẩm (sử dụng useState và useEffect)
   const [listProducts, setListProducts] = useState([]);
