@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Product.scss";
 import ReactPaginate from "react-paginate";
 import { getProducts } from "../../../services/apiService";
+import { useNavigate } from "react-router-dom";
 
 const Product = (props) => {
   const LIMIT_PRODUCTS = 12;
@@ -12,6 +13,7 @@ const Product = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productId, setProductId] = useState("");
   const imageBaseUrl = "http://localhost:8088/api/v1/products/images/";
+  const navigate = useNavigate();
 
   const handlePageClick = (event) => {
     dirFetchListProduct(+event.selected);
@@ -29,11 +31,14 @@ const Product = (props) => {
     setPageCount(data.totalPages);
   };
 
+  const handleViewProduct = (productId) => {
+    navigate(`/products/${productId}`);
+  };
+
   return (
     <>
       <div className="product-list">
-        {listProducts &&
-          listProducts.length &&
+        {listProducts && listProducts.length > 0 ? (
           listProducts.map((product, index) => (
             <div className="card" style={{ width: "18rem" }} key={index}>
               <img
@@ -49,12 +54,18 @@ const Product = (props) => {
                 <h5 className="product-name">{product.name}</h5>
                 <p className="description">{product.description}</p>
                 <p className="price">${product.price}</p>
-                <a href="#" className="btn btn-primary">
+                <a
+                  className="btn btn-primary"
+                  onClick={() => handleViewProduct(product.id)}
+                >
                   View Product
                 </a>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <p>Loading products...</p>
+        )}
       </div>
 
       <div className="user-pagination">

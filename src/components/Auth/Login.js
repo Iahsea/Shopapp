@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./Login.scss";
 import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../services/apiService";
+import { toast } from "react-toastify";
 
 const Login = (props) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -22,6 +23,7 @@ const Login = (props) => {
     let token = data;
     localStorage.setItem("authToken", token);
     if (token) {
+      toast.success("Login successfully");
       navigate("/");
     } else {
       // Optional: Giải mã JWT để kiểm tra nội dung

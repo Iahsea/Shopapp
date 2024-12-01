@@ -14,6 +14,10 @@ const getProducts = (page, limit) => {
   return axios.get(`api/v1/products?page=${page}&limit=${limit}`);
 };
 
+const getProductById = (id) => {
+  return axios.get(`api/v1/products/${id}`);
+};
+
 const postUploadProduct = (productId, file) => {
   const data = new FormData();
   data.append("files", file);
@@ -59,4 +63,5 @@ export {
   getCategories,
   getProducts,
   postUploadProduct,
+  getProductById,
 };

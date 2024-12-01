@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./HomePage.scss";
 import Banner from "../components/Banner/Banner";
-import { getProducts } from "../services/apiService";
+import { getProductById, getProducts } from "../services/apiService";
 import HotProduct from "./users/products/HotProduct";
 import Footer from "../components/Footer/Footer";
 
@@ -21,21 +21,10 @@ const HomePage = () => {
 
   const fetchListProduct = async (page) => {
     let data = await getProducts(page, LIMIT_PRODUCT);
-
-    console.log("data", data);
-
-    console.log(">>> check data", data.products);
-
-    console.log(">>> check image", data.products[0].productImages);
-
     setListProducts(data.products);
     setPageCount(data.totalPages);
   };
 
-  const handleAddToCart = (productId) => {
-    console.log(`Product with ID ${productId} added to cart!`);
-    // Thực hiện logic thêm vào giỏ hàng
-  };
   return (
     <div className="homepage-container">
       <h2 className="welcome">Welcome to IAHSEA SHOP</h2>

@@ -4,8 +4,12 @@ import Navbar from "react-bootstrap/Navbar";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { MdOutlineSearch } from "react-icons/md";
+import { useContext } from "react";
+import { CartContext } from "../../contexts/CartContext";
 
 const SubHeader = () => {
+  const { cart, getTotalItems } = useContext(CartContext);
+
   return (
     <>
       <Navbar
@@ -38,7 +42,11 @@ const SubHeader = () => {
                 Contact Information
               </NavLink>
               <NavLink to="/carts" className="nav-link">
-                <AiOutlineShoppingCart />
+                <span className="cart-icon">
+                  <AiOutlineShoppingCart />
+                </span>
+                <span className="cart-count">{getTotalItems()}</span>{" "}
+                {/* Hiển thị số lượng sản phẩm */}
               </NavLink>
             </Nav>
           </Navbar.Collapse>

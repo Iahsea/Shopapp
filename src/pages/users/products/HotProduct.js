@@ -5,13 +5,16 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import "./HotProduct.scss";
+import { useNavigate } from "react-router-dom";
 
 const HotProduct = (props) => {
-  const {
-    listProducts,
+  const navigate = useNavigate();
 
-    imageBaseUrl,
-  } = props;
+  const { listProducts, imageBaseUrl } = props;
+
+  const handleViewProduct = (productId) => {
+    navigate(`/products/${productId}`);
+  };
 
   return (
     <>
@@ -41,7 +44,11 @@ const HotProduct = (props) => {
                     <h5 className="product-name">{product.name}</h5>
                     <p className="description">{product.description}</p>
                     <p className="price">${product.price}</p>
-                    <a href="#" className="btn btn-primary">
+
+                    <a
+                      className="btn btn-primary"
+                      onClick={() => handleViewProduct(product.id)}
+                    >
                       View Product
                     </a>
                   </div>

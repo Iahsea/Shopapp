@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Register.scss";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { postRegister } from "../../services/apiService";
+import { toast } from "react-toastify";
 
 const Register = (props) => {
   const [fullName, setFullName] = useState("");
@@ -16,14 +17,35 @@ const Register = (props) => {
   const [roleId, setRoleId] = useState("");
 
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [errorPhoneNumber, setErrorPhoneNumber] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
+  const [errorRetypePassword, setErrorRetypePassword] = useState("");
 
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-    if (!password) {
+    // Kiểm tra phoneNumber
+    if (!phoneNumber || phoneNumber.length <= 6) {
+      setErrorPhoneNumber("Phone number must be more than 6 characters");
       return;
+    } else {
+      setErrorPhoneNumber("");
+    }
+
+    if (!password) {
+      setErrorPassword("Password is required");
+      return;
+    } else {
+      setErrorPassword("");
+    }
+
+    if (password !== retypePassword) {
+      setErrorRetypePassword(
+        "Your password and confirmation password do not match."
+      );
+      return;
+    } else {
+      setErrorRetypePassword("");
     }
 
     console.log("Role ID:", roleId);
@@ -42,15 +64,12 @@ const Register = (props) => {
     );
 
     if (data && data.id) {
-      console.log(">>> Register successfully");
+      console.log(">>>check", data);
 
+      toast.success("Register successfully");
       navigate("/login");
-    }
-    if (!data && !data.id) {
-      console.log(">>> Failed to register");
     } else {
-      setError("Invalid Phone number");
-      setErrorPassword("Invalid Retype Password");
+      setErrorPhoneNumber(data);
     }
   };
 
@@ -92,7 +111,9 @@ const Register = (props) => {
           />
         </div>
 
-        {error && <div className="alert alert-danger">{error}</div>}
+        {errorPhoneNumber && (
+          <div className="alert alert-danger">{errorPhoneNumber}</div>
+        )}
         <div className="form-group pass-group">
           <label>Password (*)</label>
           <input
@@ -114,6 +135,9 @@ const Register = (props) => {
             </span>
           )}
         </div>
+        {errorPassword && (
+          <div className="alert alert-danger">{errorPassword}</div>
+        )}
 
         <div className="form-group pass-group">
           <label>Retype Password (*)</label>
@@ -136,8 +160,8 @@ const Register = (props) => {
             </span>
           )}
         </div>
-        {errorPassword && (
-          <div className="alert alert-danger">{errorPassword}</div>
+        {errorRetypePassword && (
+          <div className="alert alert-danger">{errorRetypePassword}</div>
         )}
 
         <div className="form-group">
