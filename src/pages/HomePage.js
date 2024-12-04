@@ -4,6 +4,9 @@ import Banner from "../components/Banner/Banner";
 import { getProductById, getProducts } from "../services/apiService";
 import HotProduct from "./users/products/HotProduct";
 import Footer from "../components/Footer/Footer";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { postRefreshToken } from "../services/apiService";
 
 const HomePage = () => {
   const LIMIT_PRODUCT = 100;
@@ -14,10 +17,75 @@ const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productId, setProductId] = useState("");
   const imageBaseUrl = "http://localhost:8088/api/v1/products/images/";
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("authToken");
+
+  console.log(">>> check Token", token);
+
+  const handleRefreshToken = async () => {
+    const refreshToken = localStorage.getItem("refreshToken");
+    console.log(">>> check refresh Token", refreshToken);
+
+    if (!refreshToken) {
+      toast.error("No refresh token available");
+      navigate("/");
+      return;
+    }
+
+    try {
+      const response = await postRefreshToken(refreshToken);
+      console.log(">>>>> check response", response);
+      console.log(">>>>> check response.token", response.token);
+      console.log(">>>>> check response.refreshToken", response.refresh_token);
+
+      if (response && response.token && response.refresh_token) {
+        console.log(">>> check response", response);
+
+        const { token, refresh_token: newRefreshToken } = response;
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("refreshToken", newRefreshToken);
+
+        // toast.success("Token refresh successfully");
+
+        return token;
+      }
+    } catch (error) {
+      console.log("Failed to refresh token", error);
+      toast.error("Failed to refresh token");
+      navigate("/login");
+    }
+  };
 
   useEffect(() => {
-    fetchListProduct(0);
+    const token = localStorage.getItem("authToken");
+    console.log(">>> check check tokennnn", token);
+
+    // if (!token) {
+    handleRefreshToken();
+    // }
   }, []);
+
+  // if (!token) {
+  //   navigate("/login");
+  // }
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+
+    if (!authToken) {
+      toast.error("Please log in to continue");
+      navigate("/login");
+      return;
+    }
+
+    fetchListProduct(0);
+  }, [navigate]);
+
+  // Chuyển logic kiểm tra token vào useEffect
+  // useEffect(() => {
+  //   fetchListProduct(0);
+  // }, []); // Thêm dependency token và navigate vào mảng phụ thuộc
 
   const fetchListProduct = async (page) => {
     let data = await getProducts(page, LIMIT_PRODUCT);

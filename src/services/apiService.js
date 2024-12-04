@@ -32,6 +32,12 @@ const postLogin = (phoneNumber, password) => {
   );
 };
 
+const postRefreshToken = (refreshToken) => {
+  return axios.post("api/v1/users/refreshToken", {
+    refreshToken: refreshToken,
+  });
+};
+
 const postRegister = (
   fullName,
   phoneNumber,
@@ -64,4 +70,5 @@ export {
   getProducts,
   postUploadProduct,
   getProductById,
+  postRefreshToken,
 };

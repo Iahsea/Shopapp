@@ -15,38 +15,42 @@ import { CartProvider } from "./contexts/CartContext";
 import Cart from "./components/Cart/Cart";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <CartProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Web />}>
-          <Route index element={<HomePage />} />
-          <Route path="/users" element={<User />} />
-          <Route path="/admins" element={<Admin />} />
-          <Route path="/products" element={<Product />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/carts" element={<Cart />} />
-        </Route>
+  <Provider store={store}>
+    <CartProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Web />}>
+            <Route index element={<HomePage />} />
+            <Route path="/users" element={<User />} />
+            <Route path="/admins" element={<Admin />} />
+            <Route path="/products" element={<Product />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/carts" element={<Cart />} />
+          </Route>
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/categories" element={<Category />} />
-      </Routes>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-      />
-    </BrowserRouter>
-  </CartProvider>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/categories" element={<Category />} />
+        </Routes>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
+      </BrowserRouter>
+    </CartProvider>
+  </Provider>
 );

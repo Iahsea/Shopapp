@@ -1,36 +1,104 @@
 import { useEffect, useState } from "react";
 import "./Login.scss";
 import { useNavigate } from "react-router-dom";
-import { postLogin } from "../../services/apiService";
+import { postLogin, postRefreshToken } from "../../services/apiService";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
 
 const Login = (props) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
-  // Kiểm tra token khi component Login được render
-  // useEffect(() => {
-  //   const token = localStorage.getItem("authToken");
-  //   if (token) {
-  //     navigate("/"); // Nếu có token, điều hướng ngay đến trang homepage
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+
+    if (token) {
+      // navigate("/"); // Điều hướng đến trang chủ nếu có token hợp lệ
+    }
+    if (isTokenExpired(token)) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const handleLogin = async () => {
-    let data = await postLogin(phoneNumber, password);
-    console.log(">>> check", data);
-    let token = data;
-    localStorage.setItem("authToken", token);
-    if (token) {
-      toast.success("Login successfully");
-      navigate("/");
-    } else {
-      // Optional: Giải mã JWT để kiểm tra nội dung
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      console.log("Payload:", payload);
+    try {
+      setLoading(true);
+      const data = await postLogin(phoneNumber, password);
+      console.log(">>> check data", data);
+      if (data && data.token && data.refresh_token) {
+        const { token, refresh_token, message } = data;
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("refreshToken", refresh_token);
+
+        toast.success(message);
+
+        dispatch(doLogin(data));
+        navigate("/");
+      } else {
+        const { message } = data;
+        toast.error(message);
+      }
+    } catch (error) {
+      console.error(">>>Login error:", error);
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const isTokenExpired = (token) => {
+    if (!token) return true;
+
+    const decodedToken = JSON.parse(atob(token.split(".")[1])); // Giải mã JWT
+    const expirationTime = decodedToken.exp * 1000; // Thời gian hết hạn (millisecond)
+
+    console.log(">>>>> check decodedToken", decodedToken);
+
+    return Date.now() > expirationTime; // Kiểm tra hết hạn
+  };
+
+  // const handleRefreshToken = async () => {
+  //   const refreshToken = localStorage.getItem("refreshToken");
+  //   console.log(">>> check refresh Token", refreshToken);
+
+  //   if (!refreshToken) {
+  //     toast.error("No refresh token available");
+  //     navigate("/");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await postRefreshToken(refreshToken);
+  //     if (response && response.token && response.refreshToken) {
+  //       console.log(">>> check response", response);
+
+  //       const { token, refreshToken: newRefreshToken } = response;
+  //       localStorage.setItem("authToken", token);
+  //       localStorage.setItem("refreshToken", newRefreshToken);
+
+  //       toast.success("Token refresh successfully");
+
+  //       return token;
+  //     }
+  //   } catch (error) {
+  //     console.log("Failed to refresh token", error);
+  //     toast.error("Failed to refresh token");
+  //     navigate("/login");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("authToken");
+  //   console.log(">>> check check tokennnn", token);
+
+  //   // if (!token) {
+  //   handleRefreshToken();
+  //   // }
+  // }, []);
 
   return (
     <div className="login-container">
