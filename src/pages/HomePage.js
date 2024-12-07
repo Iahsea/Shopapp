@@ -7,6 +7,7 @@ import Footer from "../components/Footer/Footer";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { postRefreshToken } from "../services/apiService";
+import CategoryList from "./users/categories/ListCategory";
 
 const HomePage = () => {
   const LIMIT_PRODUCT = 100;
@@ -21,27 +22,19 @@ const HomePage = () => {
 
   const token = localStorage.getItem("authToken");
 
-  console.log(">>> check Token", token);
-
   const handleRefreshToken = async () => {
     const refreshToken = localStorage.getItem("refreshToken");
-    console.log(">>> check refresh Token", refreshToken);
 
     if (!refreshToken) {
-      toast.error("No refresh token available");
+      // toast.error("No refresh token available");
       navigate("/");
       return;
     }
 
     try {
       const response = await postRefreshToken(refreshToken);
-      console.log(">>>>> check response", response);
-      console.log(">>>>> check response.token", response.token);
-      console.log(">>>>> check response.refreshToken", response.refresh_token);
 
       if (response && response.token && response.refresh_token) {
-        console.log(">>> check response", response);
-
         const { token, refresh_token: newRefreshToken } = response;
         localStorage.setItem("authToken", token);
         localStorage.setItem("refreshToken", newRefreshToken);
@@ -59,8 +52,6 @@ const HomePage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    console.log(">>> check check tokennnn", token);
-
     // if (!token) {
     handleRefreshToken();
     // }
@@ -71,13 +62,13 @@ const HomePage = () => {
   // }
 
   useEffect(() => {
-    const authToken = localStorage.getItem("authToken");
+    // const authToken = localStorage.getItem("authToken");
 
-    if (!authToken) {
-      toast.error("Please log in to continue");
-      navigate("/login");
-      return;
-    }
+    // if (!authToken) {
+    //   toast.error("Please log in to continue");
+    //   // navigate("/login");
+    //   return;
+    // }
 
     fetchListProduct(0);
   }, [navigate]);
@@ -101,6 +92,11 @@ const HomePage = () => {
         <section className="banner">
           <Banner />
         </section>
+
+        {/* Category section */}
+        {/* <section className="category-section">
+          <CategoryList />
+        </section> */}
 
         {/* Product section */}
 

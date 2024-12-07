@@ -10,6 +10,12 @@ const getCategories = (page, limit) => {
   return axios.get(`api/v1/categories?page=${page}&limit=${limit}`);
 };
 
+const getProductByCategoryId = (id, page, limit) => {
+  return axios.get(
+    `api/v1/products/category/${id}?page=${page}&limit=${limit}`
+  );
+};
+
 const getProducts = (page, limit) => {
   return axios.get(`api/v1/products?page=${page}&limit=${limit}`);
 };
@@ -71,4 +77,5 @@ export {
   postUploadProduct,
   getProductById,
   postRefreshToken,
+  getProductByCategoryId,
 };

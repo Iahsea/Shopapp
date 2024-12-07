@@ -4,14 +4,27 @@ import Navbar from "react-bootstrap/Navbar";
 import { NavLink, useNavigate } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { doLogout } from "../../redux/action/userAction";
+import { useContext } from "react";
+import { CartContext } from "../../contexts/CartContext";
 const Header = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const account = useSelector((state) => state.user.account);
+  const dispatch = useDispatch();
+  const { isLoggedIn, setIsLoggedIn } = useContext(CartContext);
 
   const navigate = useNavigate();
 
   const handleLogin = () => {
+    navigate("/login");
+  };
+
+  const handleLogout = () => {
+    dispatch(doLogout());
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("refreshToken");
+    setIsLoggedIn(false);
     navigate("/login");
   };
 
@@ -62,7 +75,11 @@ const Header = () => {
               </>
             ) : (
               <NavDropdown title="Settings" id="basic-nav-dropdown">
-                <NavDropdown.Item>Log out</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleLogout()}>
+                  {/* <button className="btn-logout" onClick={() => handleLogout()}> */}
+                  Log out
+                  {/* </button> */}
+                </NavDropdown.Item>
                 <NavDropdown.Item>Profile</NavDropdown.Item>
               </NavDropdown>
             )}

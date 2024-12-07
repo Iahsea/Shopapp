@@ -10,7 +10,19 @@ export const CartProvider = ({ children }) => {
   const [isRemoving, setIsRemoving] = useState(false);
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : []; // Nếu có dữ liệu trong localStorage, dùng nó, nếu không dùng mảng rỗng
+    try {
+      return savedCart ? JSON.parse(savedCart) : []; // Nếu có dữ liệu trong localStorage, dùng nó, nếu không dùng mảng rỗng
+    } catch (error) {
+      console.error("Dữ liệu giỏ hàng không hợp lệ:", error);
+      localStorage.removeItem("cart");
+      return [];
+    }
+  });
+
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    console.log("authToken", localStorage.getItem("authToken"));
+
+    return !!localStorage.getItem("authToken");
   });
 
   const addToCart = (product) => {
@@ -58,6 +70,8 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         getTotalItems,
         clearCart,
+        isLoggedIn,
+        setIsLoggedIn,
       }}
     >
       {children} {/* Các component con được bọc bên trong */}

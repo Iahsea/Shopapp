@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { getProductById } from "../../../services/apiService";
 import "./ProductDetail.scss"; // Bạn có thể sử dụng SCSS để tùy chỉnh CSS cho đẹp mắt
 import { CartContext } from "../../../contexts/CartContext";
+import { toast } from "react-toastify";
 
 const ProductDetail = () => {
   const params = useParams();
@@ -12,7 +13,9 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
 
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, isLoggedIn } = useContext(CartContext);
+
+  console.log(">>>>> check isLogin", isLoggedIn);
 
   useEffect(() => {
     fetchProductDetail();
@@ -53,12 +56,23 @@ const ProductDetail = () => {
           <h1 className="product-detail__name">{product.name}</h1>
           <p className="product-detail__price">${product.price}</p>
           <p className="product-detail__description">{product.description}</p>
-          <button
-            className="product-detail__add-to-cart"
-            onClick={() => addToCart(product)}
-          >
-            Add to Cart
-          </button>
+          {isLoggedIn ? (
+            <button
+              className="product-detail__add-to-cart"
+              onClick={() => addToCart(product)}
+            >
+              Add to Cart
+            </button>
+          ) : (
+            <button
+              className="product-detail__add-to-cart"
+              onClick={() =>
+                toast.error("Vui lòng đăng nhập để thêm vào giỏ hàng!")
+              }
+            >
+              Login to Add
+            </button>
+          )}
         </div>
       </div>
 

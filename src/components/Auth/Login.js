@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Login.scss";
 import { useNavigate } from "react-router-dom";
 import { postLogin, postRefreshToken } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
+import { CartContext } from "../../contexts/CartContext";
 
 const Login = (props) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -12,12 +13,13 @@ const Login = (props) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const { isLoggedIn, setIsLoggedIn } = useContext(CartContext);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
 
     if (token) {
-      // navigate("/"); // Điều hướng đến trang chủ nếu có token hợp lệ
+      navigate("/"); // Điều hướng đến trang chủ nếu có token hợp lệ
     }
     if (isTokenExpired(token)) {
       navigate("/login");
@@ -33,7 +35,7 @@ const Login = (props) => {
         const { token, refresh_token, message } = data;
         localStorage.setItem("authToken", token);
         localStorage.setItem("refreshToken", refresh_token);
-
+        setIsLoggedIn(true);
         toast.success(message);
 
         dispatch(doLogin(data));
@@ -59,6 +61,12 @@ const Login = (props) => {
     console.log(">>>>> check decodedToken", decodedToken);
 
     return Date.now() > expirationTime; // Kiểm tra hết hạn
+  };
+
+  const handleKeyDown = (event) => {
+    if (event && event.key === "Enter") {
+      handleLogin();
+    }
   };
 
   // const handleRefreshToken = async () => {
@@ -135,6 +143,7 @@ const Login = (props) => {
               className="form-control"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              onKeyDown={(event) => handleKeyDown(event)}
             />
           </div>
 
