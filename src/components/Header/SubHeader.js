@@ -29,9 +29,6 @@ const SubHeader = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto ms-auto d-flex gap-5">
-              <NavLink to="/shops" className="nav-link">
-                Shop
-              </NavLink>
               <NavLink to="/products" className="nav-link">
                 Product
               </NavLink>
@@ -47,6 +44,10 @@ const SubHeader = () => {
                 </span>
                 <span className="cart-count">{getTotalItems()}</span>{" "}
                 {/* Hiển thị số lượng sản phẩm */}
+              </NavLink>
+
+              <NavLink to="/order-confirmation" className="nav-link">
+                Confirrm
               </NavLink>
             </Nav>
           </Navbar.Collapse>

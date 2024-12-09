@@ -24,6 +24,10 @@ const getProductById = (id) => {
   return axios.get(`api/v1/products/${id}`);
 };
 
+const getOrderById = (id) => {
+  return axios.get(`api/v1/orders/${id}`);
+};
+
 const postUploadProduct = (productId, file) => {
   const data = new FormData();
   data.append("files", file);
@@ -68,6 +72,48 @@ const postRegister = (
   });
 };
 
+const postOrder = (
+  userId,
+  fullName,
+  email,
+  phoneNumber,
+  address,
+  note,
+  totalMoney,
+  shippingMethod,
+  paymentMethod
+) => {
+  return axios.post("api/v1/orders", {
+    user_id: userId,
+    fullname: fullName,
+    email: email,
+    phone_number: phoneNumber,
+    address: address,
+    note: note,
+    total_money: totalMoney,
+    shipping_method: shippingMethod,
+    payment_method: paymentMethod,
+  });
+};
+
+const postOrderDetail = (
+  orderId,
+  productId,
+  price,
+  numberOfProducts,
+  totalMoney,
+  color
+) => {
+  return axios.post("api/v1/order_details", {
+    order_id: orderId,
+    product_id: productId,
+    price: price,
+    number_of_products: numberOfProducts,
+    total_money: totalMoney,
+    color: color,
+  });
+};
+
 export {
   postLogin,
   postRegister,
@@ -78,4 +124,7 @@ export {
   getProductById,
   postRefreshToken,
   getProductByCategoryId,
+  postOrder,
+  postOrderDetail,
+  getOrderById
 };
