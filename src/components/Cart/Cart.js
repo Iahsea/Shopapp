@@ -27,7 +27,7 @@ const Cart = () => {
     // localStorage.removeItem("cart");
     // toast.success("Thanh toán thành công, xin chân thành cảm ơn!");
     // setTimeout(() => navigate("/"), 2000); // Điều hướng về trang chủ sau 2 giây
-    navigate("/orders")
+    navigate("/order-form");
   };
 
   return (

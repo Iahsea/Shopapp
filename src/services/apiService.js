@@ -16,8 +16,10 @@ const getProductByCategoryId = (id, page, limit) => {
   );
 };
 
-const getProducts = (page, limit) => {
-  return axios.get(`api/v1/products?page=${page}&limit=${limit}`);
+const getProducts = (page, limit, keyword, categoryId) => {
+  return axios.get(
+    `api/v1/products?page=${page}&limit=${limit}&keyword=${keyword}&category_id=${categoryId}`
+  );
 };
 
 const getProductById = (id) => {
@@ -26,6 +28,14 @@ const getProductById = (id) => {
 
 const getOrderById = (id) => {
   return axios.get(`api/v1/orders/${id}`);
+};
+
+const getUserOrder = (id) => {
+  return axios.get(`api/v1/orders/user/${id}`);
+};
+
+const deleteOrder = (id) => {
+  return axios.delete(`api/v1/orders/${id}`);
 };
 
 const postUploadProduct = (productId, file) => {
@@ -126,5 +136,7 @@ export {
   getProductByCategoryId,
   postOrder,
   postOrderDetail,
-  getOrderById
+  getOrderById,
+  getUserOrder,
+  deleteOrder,
 };

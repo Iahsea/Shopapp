@@ -54,6 +54,10 @@ export const CartProvider = ({ children }) => {
     setCart([]); // Xóa giỏ hàng trong context
   };
 
+  const removeAllItemsFromCart = () => {
+    clearCart(); // Sử dụng lại logic clearCart
+  };
+
   const getTotalItems = () => {
     return cart.length;
   };
@@ -72,6 +76,7 @@ export const CartProvider = ({ children }) => {
         clearCart,
         isLoggedIn,
         setIsLoggedIn,
+        removeAllItemsFromCart,
       }}
     >
       {children} {/* Các component con được bọc bên trong */}

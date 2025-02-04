@@ -5,9 +5,16 @@ import {
 } from "../../../services/apiService";
 import "./ListCategory.scss";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategorySuccess } from "../../../redux/action/categoryAction";
 
 const ListCategory = (props) => {
+  const dispatch = useDispatch();
+  const category = useSelector((state) => state.category.category);
+  console.log(">>>>>> check category in redux", category);
+
   const [categories, setCategories] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const LIMIT_PRODUCTS = 12;
   const navigate = useNavigate();
 
@@ -23,8 +30,10 @@ const ListCategory = (props) => {
 
   const handleCategoryClick = (categoryId) => {
     console.log("check category", categoryId);
+    dispatch(fetchCategorySuccess(categoryId));
+    setSelectedCategoryId(categoryId);
 
-    navigate(`/products/category/${categoryId}`);
+    // navigate(`/products/category/${categoryId}`);
   };
 
   return (
@@ -34,8 +43,10 @@ const ListCategory = (props) => {
         {categories.map((category) => (
           <li
             key={category.id}
-            className="category-item"
-            onClick={() => handleCategoryClick(category.id, 0)}
+            className={`category-item ${
+              selectedCategoryId === category.id ? "selected" : ""
+            }`}
+            onClick={() => handleCategoryClick(category.id)}
           >
             <span>{category.name}</span>
           </li>

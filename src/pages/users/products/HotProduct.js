@@ -12,6 +12,7 @@ const HotProduct = (props) => {
 
   const { listProducts, imageBaseUrl } = props;
 
+
   const handleViewProduct = (productId) => {
     navigate(`/products/${productId}`);
   };

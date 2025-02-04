@@ -63,7 +63,7 @@ const Register = (props) => {
       roleId
     );
 
-    if (data && data.id) {
+    if (data && data.user && data.user.id) {
       console.log(">>>check", data);
 
       toast.success("Register successfully");

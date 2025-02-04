@@ -18,8 +18,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import Order from "./pages/users/orders/Order";
-import ConfirmOrder from "./pages/users/confirmOrder/ConfirmOrder";
+import OrderForm from "./pages/users/orders/OrderForm";
+import UserOrder from "./pages/users/orders/UserOrder";
+import ConfirmOrder from "./pages/users/orders/ConfirmOrder";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -39,11 +40,12 @@ root.render(
               />
               <Route path="/products/:id" element={<ProductDetail />} />
               <Route path="/carts" element={<Cart />} />
-              <Route path="/orders" element={<Order />} />
+              <Route path="/order-form" element={<OrderForm />} />
               <Route
                 path="/order-confirmation/:orderId"
                 element={<ConfirmOrder />}
               />
+              <Route path="/orders/user" element={<UserOrder />} />
             </Route>
 
             <Route path="/login" element={<Login />} />

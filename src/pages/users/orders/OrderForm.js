@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import "./Order.scss";
+import "./OrderForm.scss";
 import { useNavigate } from "react-router-dom";
 import { postOrder, postOrderDetail } from "../../../services/apiService";
 import { useSelector } from "react-redux";
 import { CartContext } from "../../../contexts/CartContext";
 
-const Order = () => {
+const OrderForm = () => {
   const account = useSelector((state) => state.user.account);
   const { cart } = useContext(CartContext);
 
@@ -61,7 +61,7 @@ const Order = () => {
       console.log("Order details created successfully:", orderDetailsResponses);
 
       // Điều hướng người dùng đến trang xác nhận (nếu cần)
-      navigate("/order-confirmation");
+      navigate(`/order-confirmation/${data.id}`);
     } else {
       console.error("Failed to create order.");
     }
@@ -209,4 +209,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default OrderForm;

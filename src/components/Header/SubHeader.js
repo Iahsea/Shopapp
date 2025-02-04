@@ -1,14 +1,28 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate, useParams } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { MdOutlineSearch } from "react-icons/md";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../../contexts/CartContext";
+import { useDispatch } from "react-redux";
+import { resetCategory } from "../../redux/action/categoryAction";
+import { fetchKeyword } from "../../redux/action/keywordSearchAction";
 
-const SubHeader = () => {
+const SubHeader = (props) => {
   const { cart, getTotalItems } = useContext(CartContext);
+  const { orderId } = props;
+  const [keyword, setKeyword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter" && keyword.trim() !== "") {
+      dispatch(fetchKeyword(keyword));
+      navigate("/products");
+    }
+  };
 
   return (
     <>
@@ -24,12 +38,23 @@ const SubHeader = () => {
               type="text"
               placeholder="Tìm kiếm sản phẩm..."
               className="search-bar"
+              value={keyword}
+              onChange={(event) => setKeyword(event.target.value)}
+              onKeyDown={handleSearch}
             />
           </span>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto ms-auto d-flex gap-5">
-              <NavLink to="/products" className="nav-link">
+              <NavLink
+                to="/products"
+                className="nav-link"
+                onClick={() => {
+                  dispatch(resetCategory());
+                  dispatch(fetchKeyword(""));
+                  setKeyword("");
+                }}
+              >
                 Product
               </NavLink>
               <NavLink to="/post" className="nav-link">
@@ -46,7 +71,7 @@ const SubHeader = () => {
                 {/* Hiển thị số lượng sản phẩm */}
               </NavLink>
 
-              <NavLink to="/order-confirmation" className="nav-link">
+              <NavLink to={`/orders/user`} className="nav-link">
                 Confirrm
               </NavLink>
             </Nav>

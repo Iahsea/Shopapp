@@ -1,4 +1,4 @@
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, Link, useNavigate, useParams } from "react-router-dom";
 import "./Web.scss";
 import Header from "./components/Header/Header";
 import SubHeader from "./components/Header/SubHeader";
@@ -8,6 +8,8 @@ const Web = () => {
   const [isScrollingDown, setIsScrollingDown] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const navigate = useNavigate();
+  const params = useParams();
+  const orderId = params.orderId;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,7 +65,7 @@ const Web = () => {
       <div
         className={`sub-header-container ${isScrollingDown ? "visible" : ""}`}
       >
-        <SubHeader />
+        <SubHeader orderId={orderId} />
       </div>
 
       <Outlet />

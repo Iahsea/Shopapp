@@ -7,13 +7,20 @@ import {
 } from "../../../services/apiService";
 import { useNavigate, useParams } from "react-router-dom";
 import CategoryList from "../categories/ListCategory";
+import { useSelector } from "react-redux";
 
 const Product = (props) => {
   const LIMIT_PRODUCTS = 12;
-  const params = useParams();
-  const categoryId = params.categoryId;
+  const keywordSearch = useSelector((state) => state.keywordSearch.keyword);
+  const keyword = keywordSearch?.search;
 
-  console.log("check param categoryId", categoryId);
+  const reduxCategory = useSelector((state) => state.category.category);
+  const reduxCategoryId = reduxCategory?.id;
+
+  // const params = useParams();
+  // const categoryId = params.categoryId;
+
+  // console.log("check param categoryId", categoryId);
 
   // Giả sử có một danh sách sản phẩm (sử dụng useState và useEffect)
   const [listProducts, setListProducts] = useState([]);
@@ -24,37 +31,43 @@ const Product = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (categoryId) {
-      fetchProductByCategory(categoryId, 0);
-    } else {
-      dirFetchListProduct(0);
-    }
-  }, [categoryId]);
+    // if (categoryId) {
+    //   fetchProductByCategory(categoryId, 0);
+    // } else {
+    setCurrentPage(1);
+    dirFetchListProduct(0);
+    // }
+  }, [reduxCategoryId, keyword]);
 
   const dirFetchListProduct = async (page) => {
-    let data = await getProducts(page, LIMIT_PRODUCTS);
+    let data = await getProducts(
+      page,
+      LIMIT_PRODUCTS,
+      keyword,
+      reduxCategoryId
+    );
     console.log(">>>>> check data product", data);
 
     setListProducts(data.products);
     setPageCount(data.totalPages);
   };
 
-  const fetchProductByCategory = async (categoryId, page) => {
-    let data = await getProductByCategoryId(categoryId, page, LIMIT_PRODUCTS);
-    console.log(">>>>> check data with category", data);
+  // const fetchProductByCategory = async (categoryId, page) => {
+  //   let data = await getProductByCategoryId(categoryId, page, LIMIT_PRODUCTS);
+  //   console.log(">>>>> check data with category", data);
 
-    setListProducts(data.products);
-    setPageCount(data.totalPages);
-  };
+  //   setListProducts(data.products);
+  //   setPageCount(data.totalPages);
+  // };
 
   const handlePageClick = (event) => {
     const selectedPage = +event.selected;
     setCurrentPage(+event.selected + 1);
-    if (categoryId) {
-      fetchProductByCategory(categoryId, selectedPage);
-    } else {
-      dirFetchListProduct(selectedPage);
-    }
+    // if (categoryId) {
+    //   fetchProductByCategory(categoryId, selectedPage);
+    // } else {
+    dirFetchListProduct(selectedPage);
+    // }
     console.log(`User requested page number ${event.selected + 1}`);
   };
 

@@ -79,7 +79,7 @@ const HomePage = () => {
   // }, []); // Thêm dependency token và navigate vào mảng phụ thuộc
 
   const fetchListProduct = async (page) => {
-    let data = await getProducts(page, LIMIT_PRODUCT);
+    let data = await getProducts(page, LIMIT_PRODUCT, "", 1);
     setListProducts(data.products);
     setPageCount(data.totalPages);
   };
@@ -99,6 +99,12 @@ const HomePage = () => {
         </section> */}
 
         {/* Product section */}
+
+        {/* Khai code đầu xuân */}
+
+        <section className="khai-code-dau-xuan">
+          <h1>KHAI CODE ĐẦU XUÂN</h1>
+        </section>
 
         <section className="product-section">
           <h2 className="section-title">SẢN PHẦM NỔI BẬT</h2>
